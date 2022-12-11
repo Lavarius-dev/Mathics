@@ -18,7 +18,7 @@ def quick_sort(lst):
     return quick_sort(low) + same + quick_sort(high)
 
 
-def merge(left, right):
+def __merge(left, right):
     if len(left) == 0:
         return left
 
@@ -49,5 +49,5 @@ def merge_sort(lst):
         return lst
 
     middle = len(lst) // 2
-    return merge(left=merge_sort(lst[:middle]),
-                 right=memoryview[lst[middle:]])
+    return __merge(left=merge_sort(lst[:middle]),
+                   right=memoryview[lst[middle:]])
