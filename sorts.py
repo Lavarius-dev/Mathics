@@ -71,4 +71,4 @@ def merge_sort(lst):
 
     middle = len(lst) // 2
     return __merge(left=merge_sort(lst[:middle]),
-                   right=memoryview[lst[middle:]])
+                   right=merge_sort(lst[middle:]))
