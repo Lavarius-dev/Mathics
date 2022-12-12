@@ -25,6 +25,37 @@ class Matrix:
         else:
             self.__matrix[row][column] = value
 
+    def get_determinant(self):
+        if self.__rows == 1 and self.__columns == 1:
+            return self.__matrix[0][0]
+        elif self.__rows == 2 and self.__columns == 2:
+            return self.__matrix[0][0] * self.__matrix[1][1] - self.__matrix[1][0] * self.__matrix[0][1]
+
+        size = len(self.__matrix)
+        copy_matrix = self.copy()
+        for i in range(size):
+            if copy_matrix.__matrix[i][i] == 0:
+                copy_matrix.__matrix[i][i] = 1.0e-18
+            for j in range(i + 1, size):
+                value = copy_matrix.__matrix[j][i] / copy_matrix.__matrix[i][i]
+                for K in range(size):
+                    copy_matrix.__matrix[j][K] = copy_matrix.__matrix[j][K] - value * copy_matrix.__matrix[i][K]
+
+        result = 1.0
+        for j in range(size):
+            result *= copy_matrix.__matrix[j][j]
+        return result
+
+    def copy(self):
+        rows = len(self.__matrix)
+        cols = len(self.__matrix[0])
+        result_matrix = Matrix(rows, cols, 0)
+        for i in range(rows):
+            for j in range(cols):
+                result_matrix.__matrix[i][j] = self.__matrix[i][j]
+
+        return result_matrix
+
     def add(self, matrix):
         if isinstance(matrix, Matrix):
             if self.__columns != matrix.__columns or self.__rows != matrix.__rows:
@@ -92,6 +123,20 @@ class Matrix:
                 result_matrix.__matrix[j][i] = self.__matrix[i][j]
 
         return result_matrix
+
+    def __eq__(self, matrix):
+        if isinstance(matrix, Matrix):
+            if (self.__rows != matrix.__rows) or (self.__columns != matrix.__columns):
+                return False
+
+            for row in range(self.__rows):
+                for column in range(self.__columns):
+                    if self.__matrix[row][column] != matrix.__matrix[row][column]:
+                        return False
+
+            return True
+        else:
+            return False
 
     def __str__(self):
         return '\n'.join(' | '.join(map(str, row)) for row in self.__matrix)
