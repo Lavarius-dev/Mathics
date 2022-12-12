@@ -1,6 +1,27 @@
 from random import randint
 
 
+def bubble_sort(lst):
+    already_sorted = True
+    while already_sorted:
+        already_sorted = False
+        for i in range(len(lst) - 1):
+            if lst[i] > lst[i + 1]:
+                lst[i], lst[i + 1] = lst[i + 1], lst[i]
+                already_sorted = True
+
+
+def selection_sort(lst):
+    for i in range(len(lst)):
+        min_index = i
+        for j in range(i + 1, len(lst)):
+            if lst[j] < lst[min_index]:
+                min_index = j
+        lst[min_index], lst[i] = lst[i], lst[min_index]
+
+    return lst
+
+
 def quick_sort(lst):
     if len(lst) < 2:
         return lst
