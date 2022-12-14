@@ -5,7 +5,7 @@ class Matrix:
         else:
             self.__rows = row_count
             self.__columns = column_count
-            self.__matrix = [[value for _ in range(row_count)] for _ in range(column_count)]
+            self.__matrix = [[value for _ in range(column_count)] for _ in range(row_count)]
 
     def get_column_count(self):
         return self.__columns
@@ -105,9 +105,10 @@ class Matrix:
                 for i in range(result_matrix.__rows):
                     for j in range(result_matrix.__columns):
                         value = 0
-                        for k in range(result_matrix.__rows):
+                        for k in range(obj.__rows):
                             value += self.__matrix[i][k] * obj.__matrix[k][j]
                         result_matrix.__matrix[i][j] = value
+
                 return result_matrix
             else:
                 raise Exception("The number of columns of the first matrix is not equal "
